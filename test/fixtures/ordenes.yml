@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Costo: 1
+  Descripcion: MyString
+  FechaCreacion: 2022-05-09 22:32:10
+  Cantidad: 1
+  FechaEntrega: 2022-05-09 22:32:10
+  Anticipo: 1
+  Diseño: MyString
+
+two:
+  Costo: 1
+  Descripcion: MyString
+  FechaCreacion: 2022-05-09 22:32:10
+  Cantidad: 1
+  FechaEntrega: 2022-05-09 22:32:10
+  Anticipo: 1
+  Diseño: MyString
