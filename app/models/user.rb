@@ -3,6 +3,5 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  belongs_to :TiposUsuario
-  has_many :Ordene, dependent: :destroy
+  has_many :ordenes, dependent: :destroy, foreign_key: 'users_id'
 end
