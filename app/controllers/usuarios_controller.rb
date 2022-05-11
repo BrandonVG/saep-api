@@ -17,7 +17,9 @@ class UsuariosController < ApplicationController
     unless is_valid
       render json: { status: 'error', message: 'Credenciales erroneas' }, status: 400 and return
     end
-    render json: user, status: 200
+    payload = { user_id: user.id }
+    access_token = AccessToken.encode(payload)
+    render json: user, meta: { access_token: access_token }, status: 200
   end
 
   def users_get
