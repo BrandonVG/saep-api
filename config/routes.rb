@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'users/:id', to: 'usuarios#user_get'
   post 'users/register', to: 'usuarios#register'
   post 'users/login', to: 'usuarios#login'
-  put 'users/:id', to: 'usuarios#update_user'
+  post 'users/create', to: 'usuarios#create_user'
+  post 'users/:id', to: 'usuarios#update_user'
   
 end
