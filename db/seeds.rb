@@ -18,3 +18,5 @@ EstadosOrdene.create([{ Estado: 'Pendiente' }, { Estado: 'En proceso' }, { Estad
   Producto.create(Nombre: "Producto #{i}", Descripcion: "Este es el producto No.#{i}", PrecioPublico: 50 + i,
                   PrecioMaquila: 40 + i, PrecioMayoreoPublico: 30 + i, PrecioMayoreoMaquila: 20 + i)
 end
+
+User.create(email: "admin@admin.com", password: "admin1", password_confirmation: "admin1", Nombre: "Admin", NumTelefono: "3121683637", tipos_usuarios_id: 1)
