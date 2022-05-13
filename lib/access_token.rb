@@ -4,12 +4,12 @@ class AccessToken
     def encode(payload)
       exp = 1.days.from_now
       payload[:exp] = exp.to_i
-      key = Rails.application.secrets.secret_key_base
+      key = Rails.application.secret_key_base
       JWT.encode(payload, key)
     end
 
     def decode(token)
-      key = Rails.application.secrets.secret_key_base
+      key = Rails.application.secret_key_base
       JWT.decode(token, key)
     end
 
