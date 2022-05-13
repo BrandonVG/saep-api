@@ -1,23 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API para software administrativo empresarial personalizado
 
-Things you may want to cover:
+Información
 
-* Ruby version
+* Version de ruby 3.0.0 y Rails 7.0
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+* Documentacion
 
 * Deployment instructions
 

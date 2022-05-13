@@ -10,6 +10,7 @@ class UsuariosController < ApplicationController
         return
       end
       render json: user.errors, status: 400
+      return
     end
     render json: { error: 'No Autorizado' }, status: 401
   end
@@ -79,11 +80,11 @@ class UsuariosController < ApplicationController
 
   def delete_user
     if autorizar_accion(params[:id])
-      if (user = User.find(params[:id])) && user.destroy 
+      if (user = User.find(params[:id])) && user.destroy
         render json: user, status: 200
         return
       end
-      render json: user.errors, status: 404
+      render json: user.errors, status: 400
       return
     end
     render json: { error: 'No Autorizado' }, status: 401
