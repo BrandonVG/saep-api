@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   post 'users/register', to: 'usuarios#register'
   post 'users/login', to: 'usuarios#login'
   post 'users/admin/create', to: 'usuarios#create_user'
-  post 'users//update/:id', to: 'usuarios#update_user'
+  post 'users/update/:id', to: 'usuarios#update_user'
 end

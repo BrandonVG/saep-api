@@ -5,8 +5,11 @@ https://api-saep.herokuapp.com/users
 
 ## Registrar
 **Método**: POST
+
 **Url**: **[Url base](#"Url_base)**/register
+
 **Datos de entrada**: Json de usuario
+
 **Datos a enviar**:
   
 | Campo         | tipo   | obligatorio |
@@ -23,6 +26,7 @@ https://api-saep.herokuapp.com/users
 | ------------- | ------ |
 | 4         | Cliente público |
 | 5         | Cliente maquila |
+
 **Ejemplo JSON a enviar**:
 ````
 {
@@ -36,6 +40,7 @@ https://api-saep.herokuapp.com/users
 	}
 }
 ````
+
 **Respuesta**:
 En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 201.
 En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
@@ -67,9 +72,13 @@ Ejemplos:
 }
 ````
 ## Login
+
 **Método**: POST
+
 **Url**: ***[Url base](#"Url_base)***/login
+
 **Datos de entrada**: Json de usuario
+
 **Datos a enviar**:
   
 | Campo         | tipo   | obligatorio |
@@ -86,6 +95,7 @@ Ejemplos:
 	}
 }
 ````
+
 **Respuesta**:
 En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 200.
 En caso de peticion incorrecta regresa un JSON con el mensaje de error "Credenciales erroneas" y código de estado 400
@@ -111,17 +121,24 @@ Ejemplos:
 }
 ````
 ## Módificar usuario
+
 **Método**: POST
+
 **Url**: **[Url base](#"Url_base)**/update/id
+
 **Datos de entrada**:Json de usuario, id en el url y Bearer token en el 
+
 **Datos a enviar**:
   
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
 | Nombre        | string | no          |
-| NumTelefono   | string | no          |    |
+| NumTelefono   | string | no          |
+
 **Importante**: Solamente el administrador puede modificar cualquier usuario y un usuario solamente puede modificarse a si mismo
+
 **Ejemplo JSON a enviar**:
+
 ````
 {
 	"user":{
@@ -130,6 +147,7 @@ Ejemplos:
 	}
 }
 ````
+
 **Respuesta**:
 En caso de recibir una peticion correcta regresa un JSON con el usuario y código de estado 201.
 En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
@@ -158,14 +176,20 @@ Ejemplos:
 }
 ````
 ## Eliminar usuario
+
 **Método**: Delete
+
 **Url**: **[Url base](#"Url_base)**/delete/id
+
 **Datos de entrada**: id en el url y Bearer token en el header
-**Importante**: Solamente el administrador puede eleminar cualquier usuario y un usuario solamente puede eliminarse a si mismo``
+
+**Importante**: Solamente el administrador puede eleminar cualquier usuario y un usuario solamente puede eliminarse a si mismo
+
 **Respuesta**:
 En caso de recibir una peticion correcta  elimina al usuario, regresa un JSON con el usuario y código de estado 200.
 En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400.
 En caso de no ser administrador o no estar logeado e intentar eliminar a otro usuario regresara No autorizado y código de estado 401
+
 ````
 Ejemplos: 
 -Petición correcta:
@@ -184,14 +208,20 @@ Ejemplos:
 }
 ````
 ## Obtener todos los usuarios
+
 **Método**: GET
+
 **Url**: **[Url base](#"Url_base)**
+
 **Datos de entrada**: Bearer token en el header
+
 **Importante**: Solamente el administrador puede acceder a todos los usuarios
+
 **Respuesta**:
 En caso de recibir una peticion correcta  regresa un JSON con todos los usuarios código de estado 200.
 En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400.
 En caso de no ser administrador o no estar logeado como administrador regresara No autorizado y código de estado 401
+
 ````
 Ejemplos: 
 -Petición correcta:
@@ -219,14 +249,20 @@ Ejemplos:
 }
 ````
 ## Obtener usuario
+
 **Método**: GET
+
 **Url**: **[Url base](#"Url_base)**/id
+
 **Datos de entrada**: id en el url y Bearer token en el header
+
 **Importante**: Solamente el administrador puede buscar un usuario
+
 **Respuesta**:
 En caso de recibir una peticion correcta  regresa un JSON con todos los usuarios código de estado 200.
 En caso de peticion incorrecta y no encontrar al usuario regresa un JSON con los errores y código de estado 404.
 En caso de no ser administrador o no estar logeado como administrador regresara No autorizado y código de estado 401
+
 ````
 Ejemplos: 
 -Petición correcta:
@@ -245,10 +281,15 @@ Ejemplos:
 }
 ````
 ## Crear usuario
+
 **Método**: POST
+
 **Url**: **[Url base](#"Url_base)**/admin/create
+
 **Datos de entrada**: Json de usuario
+
 **Datos a enviar**:
+
   
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
@@ -256,8 +297,8 @@ Ejemplos:
 | Nombre        | string | si          |
 | NumTelefono   | string | si          |
 | password      | string | si          |
-| password_confirmation | string | si          |
-| tipos_usuarios_id | int    | si     
+| password_confirmation | string | si  |
+| tipos_usuarios_id | int    | si      |
 
 **Tipos de usuario**: El administrador puede agregar cualquier tipo de usuario   
 | id         | Rol   | 
@@ -267,7 +308,9 @@ Ejemplos:
 | 3         | Empleado B |
 | 4         | Cliente público |
 | 5         | Cliente maquila |
+
 **Ejemplo JSON a enviar**:
+
 ````
 {
 	"user":{
@@ -280,6 +323,7 @@ Ejemplos:
 	}
 }
 ````
+
 **Respuesta**:
 En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 201.
 En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
