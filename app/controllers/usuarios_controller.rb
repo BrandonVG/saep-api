@@ -12,7 +12,7 @@ class UsuariosController < ApplicationController
       render json: user.errors, status: 400
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def login
@@ -21,73 +21,73 @@ class UsuariosController < ApplicationController
     user = User.find_by(email: email)
     is_valid = user && user.valid_password?(pass)
     unless is_valid
-      render json: { status: 'error', message: 'Credenciales erroneas' }, status: 400 and return
+      render json: { status: false, message: 'Credenciales erroneas' }, status: 400 and return
     end
 
     payload = { user_id: user.id }
     access_token = AccessToken.encode(payload)
-    render json: user, meta: { access_token: access_token }, status: 200
+    render json: { status: true, message: user }, meta: { access_token: access_token }, status: 200
   end
 
   def users_get
     if autorizar_accion(0)
       if (users = User.all.where.not(tipos_usuarios_id: 1))
-        render json: users, status: 200
+        render json: { status: true, message: users }, status: 200
         return
       end
-      render json: users.errors, status: 404
+      render json: { status: false, message: users.errors }, status: 404
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def user_get
     if autorizar_accion(params[:id])
       if (user = User.find(params[:id]))
-        render json: user, status: 200
+        render json: { status: true, message: user }, status: 200
         return
       end
-      render json: user.errors, status: 404
+      render json: { status: true, message: user.errors }, status: 404
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def create_user
     if autorizar_accion(0)
       user = User.new(user_params)
       if user.valid? && user.save
-        render json: user, status: 201
+        render json: { status: true, message: user }, status: 201
         return
       end
-      render json: user.errors, status: 400
+      render json: { status: false, message: user.errors }, status: 400
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def update_user
     if autorizar_accion(params[:id])
       if (user = User.find(params[:id])) && user.update(user_update_params)
-        render json: user, status: 201
+        render json: { status: true, message: user }, status: 201
         return
       end
-      render json: user.errors, status: 400
+      render json: { status: false, message: user.errors }, status: 400
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def delete_user
     if autorizar_accion(params[:id])
       if (user = User.find(params[:id])) && user.destroy
-        render json: user, status: 200
+        render json: { status: true, message: user }, status: 200
         return
       end
-      render json: user.errors, status: 400
+      render json: { status: false, message: user.errors }, status: 400
       return
     end
-    render json: { error: 'No Autorizado' }, status: 401
+    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   private
