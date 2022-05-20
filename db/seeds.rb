@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-TiposUsuario.create([{ tipo: 'Admin' }, { tipo: 'Empleado A' }, { tipo: 'Empleado B' }, { tipo: 'Cliente público' }, { tipo: 'Cliente maquila'}])
+TiposUsuario.create([{ tipo: 'Admin' }, { tipo: 'Empleado A' }, { tipo: 'Empleado B' }, { tipo: 'Cliente' }])
 
 10.times do |i|
   TiposTrabajo.create(Tipo: "Tipo de trabajo de prueba #{i}")

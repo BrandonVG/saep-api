@@ -17,8 +17,7 @@ Rails.application.routes.draw do
   delete 'ordenes/delete/:id', to: 'ordenes#delete'
   get 'ordenes', to: 'ordenes#all_orders_get'
   get 'ordenes/:id', to: 'ordenes#order_by_id_get'
-  get 'ordenes/allbystatus/:status', to: 'ordenes#orders_by_status_get'
-  get 'ordenes/bystatus/:status', to: 'ordenes#order_by_status_get'
+  get 'ordenes/status/:status', to: 'ordenes#orders_by_status_get'
   post 'ordenes/create', to: 'ordenes#create'
   post 'ordenes/update/:id', to: 'ordenes#update'
 end

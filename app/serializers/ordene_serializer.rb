@@ -3,10 +3,10 @@ class OrdeneSerializer < ActiveModel::Serializer
     :id,
     :Costo,
     :Descripcion,
-    :FechaCreacion,
     :Cantidad,
-    :FechaEntrega,
     :Anticipo,
-    :Diseño
+    :Diseño,
+    :productos
   )
+  has_many :productos
 end
