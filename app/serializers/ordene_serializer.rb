@@ -8,5 +8,9 @@ class OrdeneSerializer < ActiveModel::Serializer
     :Diseño,
     :productos
   )
-  has_many :productos
+  def productos
+    object.productos.map do |prod|
+      ::ProductosOrdenesSerializer.new(prod, ordenes_id: object.id)
+    end
+  end
 end

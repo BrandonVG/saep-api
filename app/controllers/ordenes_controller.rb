@@ -1,10 +1,10 @@
 class OrdenesController < ApplicationController
   def create
     orden = @current_user.ordenes.new(orden_create_params_finals.except(:productos))
-    prods_ids = orden_create_params[:productos]
+    prods = orden_create_params[:productos]
     if orden.valid? && orden.save
-      prods_ids.each do |id|
-        OrdenesProducto.create(ordenes_id: orden.id, productos_id: id, Cantidad: 1)
+      prods.each do |prod|
+        OrdenesProducto.create(ordenes_id: orden.id, productos_id: prod[:id_producto], Cantidad: prod[:cantidad])
       end
       render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
       return
@@ -84,12 +84,12 @@ class OrdenesController < ApplicationController
       :tipos_trabajos_id,
       :estados_ordenes_id,
       :FechaCreacion,
-      productos: []
+      productos: [:id_producto, :cantidad]
     )
   end
 
   def orden_create_params_finals
-    orden_create_params.merge(estados_ordenes_id: 1, FechaCreacion: DateTime.now)
+    orden_create_params.merge(estados_ordenes_id: 1, FechaCreacion: DateTime.now, Costo: cotizar(orden_create_params[:productos]))
   end
 
   def orden_update_params
@@ -100,5 +100,14 @@ class OrdenesController < ApplicationController
       :Diseño,
       :estados_ordenes_id
     )
+  end
+
+  def cotizar(productos)
+    total = 0
+    productos.each do |p|
+      producto = Producto.find(p[:id_producto])
+      total += producto.PrecioPublico * p[:cantidad]
+    end
+    total
   end
 end
