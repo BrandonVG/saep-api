@@ -18,4 +18,12 @@ class ApplicationController < ActionController::API
       false
     end
   end
+
+  def autorizar_accion_ordenes(id)
+    if @current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2 || @current_user.id == id
+      true
+    else
+      false
+    end
+  end
 end

@@ -13,7 +13,7 @@ class OrdenesController < ApplicationController
   end
 
   def update
-    if (orden = Ordene.find(params[:id])) && autorizar_accion(orden.users_id)
+    if (orden = Ordene.find(params[:id])) && autorizar_accion_ordenes(orden.users_id)
       if orden.update(orden_update_params)
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
         return
@@ -25,7 +25,7 @@ class OrdenesController < ApplicationController
   end
 
   def all_orders_get
-    if autorizar_accion(0)
+    if autorizar_accion_ordenes(0)
       if (ordenes = Ordene.all)
         render json: { status: true, message: ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer) }, status: 200
         return
@@ -37,7 +37,7 @@ class OrdenesController < ApplicationController
   end
 
   def order_by_id_get
-    if autorizar_accion(0)
+    if autorizar_accion_ordenes(0)
       if (orden = Ordene.find(params[:id]))
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 200
         return
@@ -49,7 +49,7 @@ class OrdenesController < ApplicationController
   end
 
   def delete
-    if autorizar_accion(0)
+    if autorizar_accion_ordenes(0)
       if (orden = Ordene.find(params[:id])) && orden.destroy
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 200
         return
@@ -61,7 +61,7 @@ class OrdenesController < ApplicationController
   end
 
   def orders_by_status_get
-    if autorizar_accion(0)
+    if autorizar_accion_ordenes(0)
       if (ordenes = Ordene.where(estados_ordenes_id: params[:status]))
         render json: { status: true, message: ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer) }, status: 200
         return
