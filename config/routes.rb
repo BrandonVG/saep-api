@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   get 'tipos_usuarios', to: 'tipos_usuarios#all_tipos_usuarios'
 
   # Api tipos trabajo
-  get 'tipos_trabajo', to: 'tipos_trabajos#all_tipos_trabajos'
+  get 'tipos_trabajos', to: 'tipos_trabajos#all_tipos_trabajos'
 
   # Api productos
   get 'productos', to: 'productos#all_productos'
