@@ -8,91 +8,138 @@ https://api-saep.herokuapp.com/ordenes
 
 **Url**: **[Url base](#"Url_base)**/create
 
-**Datos de entrada**: Json de usuario
+**Datos de entrada**: Js_on de orden
 
 **Datos a enviar**:
   
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
-| email         | string | si          |
-| Nombre        | string | si          |
-| NumTelefono   | string | si          |
-| password      | string | si          |
-| password_confirmation | string | si          |
-| tipos_usuarios_id | int    | si     
+| Descripcion   | string | si          |
+| Anticipo      | string | si          |
+| tipos_trabajo_id | int | si          |
+| productos      | array de JSONs de productos | si          |
 
-**Tipos de usuario**: Solo se admiten 2 id de tipo de usuario al registrar     
-| id         | Rol   | 
-| ------------- | ------ |
-| 4         | Cliente público |
-| 5         | Cliente maquila |
+
+**Productos**: El json de los productos debe llevar
+
+| Campo         | tipo   | obligatorio |
+| ------------- | ------ | ----------- |
+| id_producto   | int    | si          |
+| cantidad      | int | si          |
 
 **Ejemplo JSON a enviar**:
 ````
 {
-	"user":{
-		"email":"cliente@ejemplo.com",
-		"password":"clienteai",
-		"password_confirmation": "clienteai",
-		"Nombre": "Cliente ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 4
-	}
+    "orden":{
+        "Descripcion": "Producto de prueba bien mamalon asi para probar bien vergas como esta descripcion bien vergas osiosi"
+        "Anticipo": 200,
+        "tipos_trabajos_id": 1,
+        "productos":[
+            {
+                "id_producto": 1,
+                "cantidad": 2
+            },
+            {
+                "id_producto": 2,
+                "cantidad": 2
+            },
+            {
+                "id_producto": 3,
+                "cantidad": 2
+            }
+        ]
+    }
 }
 ````
 
 **Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 201.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
-En caso de ingresar un id de tipo de usuario que no sea 4 o 5 regresara No autorizado y código de estado 401
+En caso de recibir una peticion correcta regresa un JSON con status true, un message con la orden y código de estado 201.
+En caso de peticion incorrecta regresa un JSON con los errores, status false y código de estado 400
+En caso de peticion sin estar logeado regresa un JSON con status false, un message "No autorizado" y
+codigo de estado 201
 ````
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	},
-	"meta": {
-		"access_token": "ey....yX2lkIjoiZDVmZmFlNzAtMDM1Ni00Nzg3L....xYmY1IiwiZXhwIjoxNjUyNDgzMzAwfQ.stvecjI4_....nq5bJzu5B-HdIj7pdDxfc"
-	}
+    "status": true,
+    "message": {
+        "id": 24,
+        "Costo": 306,
+        "Descripcion": "Producto de prueba bien mamalon asi para probar bien vergas como esta descripcion bien vergas osiosi",
+        "Cantidad": 5,
+        "Anticipo": 200,
+        "Diseño": null,
+        "productos": [
+            {
+                "id": 1,
+                "Nombre": "Producto 0",
+                "Descripcion": "Este es el producto No.0",
+                "PrecioPublico": 50,
+                "PrecioMayoreoPublico": 30,
+                "PrecioMaquila": 40,
+                "PrecioMayoreoMaquila": 20,
+                "cantidad": 2
+            },
+            {
+                "id": 2,
+                "Nombre": "Producto 1",
+                "Descripcion": "Este es el producto No.1",
+                "PrecioPublico": 51,
+                "PrecioMayoreoPublico": 31,
+                "PrecioMaquila": 41,
+                "PrecioMayoreoMaquila": 21,
+                "cantidad": 2
+            },
+            {
+                "id": 3,
+                "Nombre": "Producto 2",
+                "Descripcion": "Este es el producto No.2",
+                "PrecioPublico": 52,
+                "PrecioMayoreoPublico": 32,
+                "PrecioMaquila": 42,
+                "PrecioMayoreoMaquila": 22,
+                "cantidad": 2
+            }
+        ]
+    }
 }
 -Petición incorrecta:
 {
-	"email":{
-		"That email has been taken"
+	status: false,
+	"message":"estados_ordenes":{
+		"EstadosOrdene should exist"
 	}
 }
--Peticion con id de tipo de usuario incorrecta
+-Peticion sin estar logeado
 {
-	"No autorizado"
+	status: false,
+	"message": "No autorizado"
 }
 ````
-## Login
+## Modificar orden
 
 **Método**: POST
 
-**Url**: ***[Url base](#"Url_base)***/login
+**Url**: ***[Url base](#"Url_base)***/update/id
 
-**Datos de entrada**: Json de usuario
+**Datos de entrada**: Json de orden
 
 **Datos a enviar**:
   
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
-| email         | string | si          |
-| password      | string | si          |
+| Costo         | int    | no          |
+| Descripcion   | string | no          |
+| estados_ordenes_id | int | no          |
 
 **Ejemplo JSON a enviar**:
 ````
 {
-	"user":{
-		"email":"cliente@ejemplo.com",
-		"password":"clienteai"
-	}
+    "orden":{
+				"Costo":250
+        "Descripcion": "Producto de prueba bien mamalon asi para probar bien vergas como esta descripcion bien vergas osiosi"
+				"estados_ordenes_id": 2
+    }
 }
 ````
 
@@ -120,62 +167,7 @@ Ejemplos:
 	"message": "Credenciales erroneas"
 }
 ````
-## Módificar usuario
-
-**Método**: POST
-
-**Url**: **[Url base](#"Url_base)**/update/id
-
-**Datos de entrada**:Json de usuario, id en el url y Bearer token en el 
-
-**Datos a enviar**:
-  
-| Campo         | tipo   | obligatorio |
-| ------------- | ------ | ----------- |
-| Nombre        | string | no          |
-| NumTelefono   | string | no          |
-
-**Importante**: Solamente el administrador puede modificar cualquier usuario y un usuario solamente puede modificarse a si mismo
-
-**Ejemplo JSON a enviar**:
-
-````
-{
-	"user":{
-		"Nombre": "Cliente ejemplo",
-		"NumTelefono":"3123027485",
-	}
-}
-````
-
-**Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario y código de estado 201.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
-En caso de no ser administrador o no estar logeado e intentar modificar un a otro usuario regresara No autorizado y código de estado 401
-````
-Ejemplos: 
--Petición correcta:
-{
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	}
-}
--Petición incorrecta:
-{
-	"nombre":{
-		"Name cant be null"
-	}
-}
--Peticion con sin logear o modificar otro usuario sin ser admin 
-{
-	"No autorizado"
-}
-````
-## Eliminar usuario
+## Eliminar orden
 
 **Método**: Delete
 
@@ -183,31 +175,72 @@ Ejemplos:
 
 **Datos de entrada**: id en el url y Bearer token en el header
 
-**Importante**: Solamente el administrador puede eleminar cualquier usuario y un usuario solamente puede eliminarse a si mismo
+**Importante**: Solamente el administrador puede eleminar ordenes
 
 **Respuesta**:
-En caso de recibir una peticion correcta  elimina al usuario, regresa un JSON con el usuario y código de estado 200.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400.
-En caso de no ser administrador o no estar logeado e intentar eliminar a otro usuario regresara No autorizado y código de estado 401
+En caso de recibir una peticion correcta  elimina la orden, regresa un JSON con la orden, status true y código de estado 200.
+En caso de peticion incorrecta regresa un JSON con los errores, status false y código de estado 400.
+En caso de no ser administrador regresara No autorizado, status false y código de estado 401
 
 ````
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	}
+    "status": true,
+    "message": {
+        "id": 24,
+        "Costo": 306,
+        "Descripcion": "Producto de prueba bien mamalon asi para probar bien vergas como esta descripcion bien vergas osiosi",
+        "Cantidad": 5,
+        "Anticipo": 200,
+        "Diseño": null,
+        "productos": [
+            {
+                "id": 1,
+                "Nombre": "Producto 0",
+                "Descripcion": "Este es el producto No.0",
+                "PrecioPublico": 50,
+                "PrecioMayoreoPublico": 30,
+                "PrecioMaquila": 40,
+                "PrecioMayoreoMaquila": 20,
+                "cantidad": 2
+            },
+            {
+                "id": 2,
+                "Nombre": "Producto 1",
+                "Descripcion": "Este es el producto No.1",
+                "PrecioPublico": 51,
+                "PrecioMayoreoPublico": 31,
+                "PrecioMaquila": 41,
+                "PrecioMayoreoMaquila": 21,
+                "cantidad": 2
+            },
+            {
+                "id": 3,
+                "Nombre": "Producto 2",
+                "Descripcion": "Este es el producto No.2",
+                "PrecioPublico": 52,
+                "PrecioMayoreoPublico": 32,
+                "PrecioMaquila": 42,
+                "PrecioMayoreoMaquila": 22,
+                "cantidad": 2
+            }
+        ]
+    }
 }
--Peticion sin logear o modificar otro usuario sin ser admin 
+-Petición incorrecta:
 {
-	"No autorizado"
+	status: false,
+	"message":"error"
+	
+}
+-Peticion sin estar logeado
+{
+	status: false,
+	"message": "No autorizado"
 }
 ````
-## Obtener todos los usuarios
+## Obtener todas las ordenes
 
 **Método**: GET
 
@@ -215,40 +248,31 @@ Ejemplos:
 
 **Datos de entrada**: Bearer token en el header
 
-**Importante**: Solamente el administrador puede acceder a todos los usuarios
+**Importante**: Solamente el administrador y empleado A pueden acceder a todas las ordenes, al empleado B
+regresa todas las ordenes en proceso y a los clientes solo sus ordenes.
 
 **Respuesta**:
-En caso de recibir una peticion correcta  regresa un JSON con todos los usuarios código de estado 200.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400.
-En caso de no ser administrador o no estar logeado como administrador regresara No autorizado y código de estado 401
+En caso de recibir una peticion correcta  regresa un JSON con todos las ordenes, status true código de estado 200.
+En caso de peticion incorrecta regresa un JSON con los errores, status false y código de estado 400.
+En caso de no ser administrador regresara No autorizado, status false y código de estado 401
 
-````
-Ejemplos: 
--Petición correcta:
-{
-	"users": [
-		{
-			"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-			"email": "cliente23@a.i",
-			"nombre": "Cliente perro",
-			"num_telefono": "3123027485",
-			"tipos_usuarios_id": 5
-		},
-		{
-			"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-			"email": "cliente23@a.i",
-			"nombre": "Cliente perro",
-			"num_telefono": "3123027485",
-			"tipos_usuarios_id": 5
-		}
-	]
-}
--Peticion sin logear o modificar otro usuario sin ser admin 
-{
-	"No autorizado"
-}
-````
-## Obtener usuario
+## Obtener todas las ordenes por estatus
+
+**Método**: GET
+
+**Url**: **[Url base](#"Url_base)**/status/id_status
+
+**Datos de entrada**: Bearer token en el header y id de estado de orden
+
+**Importante**: Solamente el administrador y empleado A pueden acceder a todas las ordenes por estado
+
+**Respuesta**:
+En caso de recibir una peticion correcta  regresa un JSON con todos las ordenes, status true código de estado 200.
+En caso de peticion incorrecta regresa un JSON con los errores, status false y código de estado 400.
+En caso de no ser administrador regresara No autorizado, status false y código de estado 401
+
+
+## Obtener orden por id
 
 **Método**: GET
 
@@ -256,98 +280,9 @@ Ejemplos:
 
 **Datos de entrada**: id en el url y Bearer token en el header
 
-**Importante**: Solamente el administrador puede buscar un usuario
+**Importante**: Solamente el administrador puede buscar una orden
 
 **Respuesta**:
 En caso de recibir una peticion correcta  regresa un JSON con todos los usuarios código de estado 200.
 En caso de peticion incorrecta y no encontrar al usuario regresa un JSON con los errores y código de estado 404.
 En caso de no ser administrador o no estar logeado como administrador regresara No autorizado y código de estado 401
-
-````
-Ejemplos: 
--Petición correcta:
-{
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	}
-}
--Peticion sin logear o modificar otro usuario sin ser admin 
-{
-	"No autorizado"
-}
-````
-## Crear usuario
-
-**Método**: POST
-
-**Url**: **[Url base](#"Url_base)**/admin/create
-
-**Datos de entrada**: Json de usuario
-
-**Datos a enviar**:
-
-  
-| Campo         | tipo   | obligatorio |
-| ------------- | ------ | ----------- |
-| email         | string | si          |
-| Nombre        | string | si          |
-| NumTelefono   | string | si          |
-| password      | string | si          |
-| password_confirmation | string | si  |
-| tipos_usuarios_id | int    | si      |
-
-**Tipos de usuario**: El administrador puede agregar cualquier tipo de usuario   
-| id         | Rol   | 
-| ------------- | ------ |
-| 1         | Administrador |
-| 2         | Empleado A |
-| 3         | Empleado B |
-| 4         | Cliente público |
-| 5         | Cliente maquila |
-
-**Ejemplo JSON a enviar**:
-
-````
-{
-	"user":{
-		"email":"empleadoA@ejemplo.com",
-		"password":"empleadoa1",
-		"password_confirmation": "empleadoa1",
-		"Nombre": "Empleado A ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 2
-	}
-}
-````
-
-**Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 201.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
-En caso de intentar agregar un usuario sin ser admin regresa No autorizado y código de estado 401
-````
-Ejemplos: 
--Petición correcta:
-{
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email":"empleadoA@ejemplo.com",
-		"Nombre": "Empleado A ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 2
-	},
-}
--Petición incorrecta:
-{
-	"email":{
-		"That email has been taken"
-	}
-}
--Peticion con id de tipo de usuario incorrecta
-{
-	"No autorizado"
-}
-````

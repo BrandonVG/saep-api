@@ -26,7 +26,7 @@ class OrdenesController < ApplicationController
 
   def all_orders_get
     if autorizar_accion_ordenes(0)
-      if (ordenes = Ordene.all)
+      if (ordenes = obtener_ordenes)
         render json: { status: true, message: ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer) }, status: 200
         return
       end
@@ -78,9 +78,8 @@ class OrdenesController < ApplicationController
     params.require(:orden).permit(
       :Costo,
       :Descripcion,
-      :Cantidad,
       :Anticipo,
-      #:Diseño,
+      # :Diseño,
       :tipos_trabajos_id,
       :estados_ordenes_id,
       :FechaCreacion,
@@ -96,8 +95,7 @@ class OrdenesController < ApplicationController
     params.require(:orden).permit(
       :Costo,
       :Descripcion,
-      :Cantidad,
-      :Diseño,
+      # :Diseño,
       :estados_ordenes_id
     )
   end
@@ -109,5 +107,16 @@ class OrdenesController < ApplicationController
       total += producto.PrecioPublico * p[:cantidad]
     end
     total
+  end
+
+  def obtener_ordenes
+    if @current_user.id == 1 || @current_user.id == 2
+      Ordene.all
+      return
+    elsif @current_user.id == 3
+      Ordene.where(estados_ordenes_id: 2)
+      return
+    end
+    Ordene.where(users_id: @current_user.id)
   end
 end

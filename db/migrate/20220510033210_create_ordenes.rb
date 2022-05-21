@@ -4,7 +4,6 @@ class CreateOrdenes < ActiveRecord::Migration[7.0]
       t.integer :Costo
       t.string :Descripcion
       t.datetime :FechaCreacion
-      t.integer :Cantidad
       t.datetime :FechaEntrega
       t.integer :Anticipo
       t.string :Diseño
