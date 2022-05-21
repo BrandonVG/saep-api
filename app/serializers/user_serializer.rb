@@ -1,4 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
+  
   attributes(
     :id,
     :email,
@@ -6,4 +7,5 @@ class UserSerializer < ActiveModel::Serializer
     :NumTelefono,
     :tipos_usuarios_id
   )
+  has_many :ordenes
 end

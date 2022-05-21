@@ -8,11 +8,19 @@ class ApplicationController < ActionController::API
     regex = /^Bearer /
     auth_header = auth_header.gsub(regex, '') if auth_header
     @current_user = !auth_header.nil? ? AccessToken.get_user_from_token(auth_header) : nil
-    render json: { error: 'No Autorizado' }, status: 401 unless @current_user
+    render json: { status: false, message: 'No Autorizado' }, status: 401 unless @current_user
   end
 
   def autorizar_accion(id)
     if @current_user.tipos_usuarios_id == 1 || @current_user.id == id
+      true
+    else
+      false
+    end
+  end
+
+  def autorizar_accion_ordenes(id)
+    if @current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2 || @current_user.id == id
       true
     else
       false
