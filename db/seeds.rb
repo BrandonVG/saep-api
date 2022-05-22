@@ -19,4 +19,4 @@ EstadosOrdene.create([{ Estado: 'Pendiente' }, { Estado: 'En proceso' }, { Estad
                   PrecioMaquila: 40 + i, PrecioMayoreoPublico: 30 + i, PrecioMayoreoMaquila: 20 + i)
 end
 
-User.create(email: "admin@admin.com", password: "admin1", password_confirmation: "admin1", Nombre: "Admin", NumTelefono: "3121683637", tipos_usuarios_id: 1)
+User.create(email: 'admin@admin.com', token_auth: '123', tipos_usuarios_id: 1)

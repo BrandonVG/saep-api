@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     regex = /^Bearer /
     auth_header = auth_header.gsub(regex, '') if auth_header
     @current_user = !auth_header.nil? ? AccessToken.get_user_from_token(auth_header) : nil
-    render json: { status: false, message: 'No Autorizado' }, status: 401 unless @current_user
+    render json: { status: false, message: 'No Autorizado o token expirado' }, status: 401 unless @current_user
   end
 
   def autorizar_accion(id)

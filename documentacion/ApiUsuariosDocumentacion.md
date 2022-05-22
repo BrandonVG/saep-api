@@ -3,74 +3,6 @@
 ##  **Url_base**:
 https://api-saep.herokuapp.com/users
 
-## Registrar
-**Método**: POST
-
-**Url**: **[Url base](#"Url_base)**/register
-
-**Datos de entrada**: Json de usuario
-
-**Datos a enviar**:
-  
-| Campo         | tipo   | obligatorio |
-| ------------- | ------ | ----------- |
-| email         | string | si          |
-| Nombre        | string | si          |
-| NumTelefono   | string | si          |
-| password      | string | si          |
-| password_confirmation | string | si          |
-| tipos_usuarios_id | int    | si     
-
-**Tipos de usuario**: Solo se admiten 2 id de tipo de usuario al registrar     
-| id         | Rol   | 
-| ------------- | ------ |
-| 4         | Cliente público |
-| 5         | Cliente maquila |
-
-**Ejemplo JSON a enviar**:
-````
-{
-	"user":{
-		"email":"cliente@ejemplo.com",
-		"password":"clienteai",
-		"password_confirmation": "clienteai",
-		"Nombre": "Cliente ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 4
-	}
-}
-````
-
-**Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 201.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
-En caso de ingresar un id de tipo de usuario que no sea 4 o 5 regresara No autorizado y código de estado 401
-````
-Ejemplos: 
--Petición correcta:
-{
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	},
-	"meta": {
-		"access_token": "ey....yX2lkIjoiZDVmZmFlNzAtMDM1Ni00Nzg3L....xYmY1IiwiZXhwIjoxNjUyNDgzMzAwfQ.stvecjI4_....nq5bJzu5B-HdIj7pdDxfc"
-	}
-}
--Petición incorrecta:
-{
-	"email":{
-		"That email has been taken"
-	}
-}
--Peticion con id de tipo de usuario incorrecta
-{
-	"No autorizado"
-}
-````
 ## Login
 
 **Método**: POST
@@ -84,35 +16,33 @@ Ejemplos:
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
 | email         | string | si          |
-| password      | string | si          |
+| token_auth      | string | si          |
 
 **Ejemplo JSON a enviar**:
 ````
 {
 	"user":{
 		"email":"cliente@ejemplo.com",
-		"password":"clienteai"
+		"token_auth":"1234"
 	}
 }
 ````
 
 **Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario, en la metadata el token de acceso y código de estado 200.
+En caso de recibir una peticion correcta regresa un JSON con el usuario, el token de acceso, status true y código de estado 200.
 En caso de peticion incorrecta regresa un JSON con el mensaje de error "Credenciales erroneas" y código de estado 400
 ````
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	},
-	"meta": {
-		"access_token": "ey....yX2lkIjoiZDVmZmFlNzAtMDM1Ni00Nzg3L....xYmY1IiwiZXhwIjoxNjUyNDgzMzAwfQ.stvecjI4_....nq5bJzu5B-HdIj7pdDxfc"
-	}
+    "status": true,
+    "message": {
+        "id": "c158bb8b-b281-4a2c-9672-25866f87be3b",
+        "email": "admin@admin.com",
+        "tipos_usuarios_id": 1,
+        "ordenes": []
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYzE....iZXhwIjoxNjUzMjc5NjkwfQ.0QZzAhVg0PwxD...dt8"
 }
 -Petición incorrecta:
 {
@@ -132,47 +62,49 @@ Ejemplos:
   
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
-| Nombre        | string | no          |
-| NumTelefono   | string | no          |
+| email        | string | no          |
+| tipos_usuarios_id   | int | no          |
 
-**Importante**: Solamente el administrador puede modificar cualquier usuario y un usuario solamente puede modificarse a si mismo
+**Importante**: Solamente el administrador puede modificar a los usuarios
 
 **Ejemplo JSON a enviar**:
 
 ````
 {
 	"user":{
-		"Nombre": "Cliente ejemplo",
-		"NumTelefono":"3123027485",
+		"email": "cliente23@a.i",
+		"tipos_usuarios_id":"3",
 	}
 }
 ````
 
 **Respuesta**:
-En caso de recibir una peticion correcta regresa un JSON con el usuario y código de estado 201.
-En caso de peticion incorrecta regresa un JSON con los errores y código de estado 400
-En caso de no ser administrador o no estar logeado e intentar modificar un a otro usuario regresara No autorizado y código de estado 401
+En caso de recibir una peticion correcta regresa un JSON con el usuario, status true y código de estado 201.
+En caso de peticion incorrecta regresa un JSON con los errores, status false y código de estado 400
+En caso de no ser administrador regresa No autorizado, status false y código de estado 401
 ````
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
+	"status": true,
+	"message": {
 		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
 		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
+		"tipos_usuarios_id": 3,
+		"ordenes": []
 	}
 }
 -Petición incorrecta:
 {
-	"nombre":{
-		"Name cant be null"
+	"status":false,
+	"message":{
+		"email cant be null"
 	}
 }
--Peticion con sin logear o modificar otro usuario sin ser admin 
+-Peticion sin ser admin 
 {
-	"No autorizado"
+	"status":false,
+	"message":"No autorizado"
 }
 ````
 ## Eliminar usuario
@@ -194,17 +126,18 @@ En caso de no ser administrador o no estar logeado e intentar eliminar a otro us
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
+	"status": true,
+	"message": {
 		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
 		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
+		"tipos_usuarios_id": 3,
+		"ordenes": []
 	}
 }
--Peticion sin logear o modificar otro usuario sin ser admin 
+-Peticion sin ser admin 
 {
-	"No autorizado"
+	"status":false,
+	"message":"No autorizado"
 }
 ````
 ## Obtener todos los usuarios
@@ -226,26 +159,28 @@ En caso de no ser administrador o no estar logeado como administrador regresara 
 Ejemplos: 
 -Petición correcta:
 {
-	"users": [
-		{
-			"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-			"email": "cliente23@a.i",
-			"nombre": "Cliente perro",
-			"num_telefono": "3123027485",
-			"tipos_usuarios_id": 5
-		},
-		{
-			"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-			"email": "cliente23@a.i",
-			"nombre": "Cliente perro",
-			"num_telefono": "3123027485",
-			"tipos_usuarios_id": 5
-		}
-	]
+    "status": true,
+    "message": {
+        "users": [
+            {
+                "id": "f9aa61a6-ed26-4ea7-b075-97152f8d54a1",
+                "email": "cliente23@a.i",
+                "tipos_usuarios_id": 3,
+                "ordenes": []
+            },
+						{
+                "id": "f9bc61a6-ed26-4ea7-b075-97152f8d54a1",
+                "email": "cliente3@a.i",
+                "tipos_usuarios_id": 4,
+                "ordenes": []
+            }
+        ]
+    }
 }
--Peticion sin logear o modificar otro usuario sin ser admin 
+-Peticion sin ser admin 
 {
-	"No autorizado"
+	"status":false,
+	"message":"No autorizado"
 }
 ````
 ## Obtener usuario
@@ -267,17 +202,18 @@ En caso de no ser administrador o no estar logeado como administrador regresara 
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email": "cliente23@a.i",
-		"nombre": "Cliente perro",
-		"num_telefono": "3123027485",
-		"tipos_usuarios_id": 5
-	}
+    "status": true,
+    "message": {
+        "id": "f9aa61a6-ed26-4ea7-b075-97152f8d54a1",
+        "email": "admin@admin.cliente",
+        "tipos_usuarios_id": 4,
+        "ordenes": []
+    }
 }
--Peticion sin logear o modificar otro usuario sin ser admin 
+-Peticion sin ser admin 
 {
-	"No autorizado"
+	"status":false,
+	"message":"No autorizado"
 }
 ````
 ## Crear usuario
@@ -294,10 +230,6 @@ Ejemplos:
 | Campo         | tipo   | obligatorio |
 | ------------- | ------ | ----------- |
 | email         | string | si          |
-| Nombre        | string | si          |
-| NumTelefono   | string | si          |
-| password      | string | si          |
-| password_confirmation | string | si  |
 | tipos_usuarios_id | int    | si      |
 
 **Tipos de usuario**: El administrador puede agregar cualquier tipo de usuario   
@@ -306,21 +238,16 @@ Ejemplos:
 | 1         | Administrador |
 | 2         | Empleado A |
 | 3         | Empleado B |
-| 4         | Cliente público |
-| 5         | Cliente maquila |
+| 4         | Cliente    |
 
 **Ejemplo JSON a enviar**:
 
 ````
 {
-	"user":{
-		"email":"empleadoA@ejemplo.com",
-		"password":"empleadoa1",
-		"password_confirmation": "empleadoa1",
-		"Nombre": "Empleado A ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 2
-	}
+    "user":{
+        "email":"clientea2@p.i",
+        "tipos_usuarios_id":2
+    }
 }
 ````
 
@@ -332,22 +259,24 @@ En caso de intentar agregar un usuario sin ser admin regresa No autorizado y có
 Ejemplos: 
 -Petición correcta:
 {
-	"user": {
-		"id": "d5ffae70-0356-4787-af95-b5a80ee81bf5",
-		"email":"empleadoA@ejemplo.com",
-		"Nombre": "Empleado A ejemplo",
-		"NumTelefono":"3123027485",
-		"tipos_usuarios_id": 2
-	},
+    "status": true,
+    "message": {
+        "id": "d67063b0-d8b4-47a6-ba2e-ddfb7feb8200",
+        "email": "clientea3@p.i",
+        "tipos_usuarios_id": 3,
+        "ordenes": []
+    }
 }
 -Petición incorrecta:
 {
-	"email":{
+	"status":false,
+	"message":{
 		"That email has been taken"
 	}
 }
 -Peticion con id de tipo de usuario incorrecta
 {
-	"No autorizado"
+	"status":false,
+	"message":"No autorizado"
 }
 ````
