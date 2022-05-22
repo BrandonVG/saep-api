@@ -3,8 +3,11 @@ class UsuariosController < ApplicationController
 
   def login
     if !login_params[:token_auth].nil?
-      user = User.find_by(email: login_params[:email])
+      user = User.find_by(email: login_params[:email], token_auth: login_params[:token_auth])
       if !user.nil?
+        access_token = AccessToken.encode({ user_id: user.id })
+        render json: { status: true, message: UserSerializer.new(user), access_token: access_token }, status: 200
+      elsif (user = User.find_by(email: login_params[:email])) && !user.nil? && user.tipos_usuarios_id != 1
         user.update(token_auth: login_params[:token_auth]) if user.token_auth.nil?
         access_token = AccessToken.encode({ user_id: user.id })
         render json: { status: true, message: UserSerializer.new(user), access_token: access_token }, status: 200
