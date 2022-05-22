@@ -20,3 +20,4 @@ EstadosOrdene.create([{ Estado: 'Pendiente' }, { Estado: 'En proceso' }, { Estad
 end
 
 User.create(email: 'admin@admin.com', token_auth: '123', tipos_usuarios_id: 1)
+User.create(email: 'frodriguez13@ucol.mx', token_auth: 'Czee0I5GhMQ9M2anb5SF28YDM842', tipos_usuarios_id: 1)
