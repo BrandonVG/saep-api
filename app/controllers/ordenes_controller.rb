@@ -64,7 +64,8 @@ class OrdenesController < ApplicationController
   def orders_by_status_get
     if autorizar_accion_ordenes(0)
       if (ordenes = Ordene.where(estados_ordenes_id: params[:status]))
-        render json: { status: true, message: ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer) }, status: 200
+        od = ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer).as_json
+        render json: { status: true, message: od[:ordenes] }, status: 200
         return
       end
       render json: { status: false, message: ordenes.errors }, status: 400
