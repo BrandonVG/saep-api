@@ -28,9 +28,8 @@ class UsuariosController < ApplicationController
   def users_get
     if autorizar_accion(0)
       if (users = User.all.where.not(tipos_usuarios_id: 1))
-        render json: { status: true,
-                       message: ActiveModelSerializers::SerializableResource.new(users, each_serializer: UserSerializer) },
-                       status: 200
+        us = ActiveModelSerializers::SerializableResource.new(users, each_serializer: UserSerializer, root: 'message').as_json
+        render json: { status: true, message: us[:message] }, status: 200
         return
       end
       render json: { status: false, message: users.errors }, status: 404
