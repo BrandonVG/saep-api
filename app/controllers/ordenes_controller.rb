@@ -106,7 +106,7 @@ class OrdenesController < ApplicationController
     total = 0
     productos.each do |p|
       producto = Producto.find(p[:idProducto])
-      total += producto.PrecioPublico * p[:cantidad]
+      total += producto.precioPublico * p[:cantidad]
     end
     total
   end
