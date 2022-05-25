@@ -17,7 +17,7 @@ class UsuariosController < ApplicationController
           access_token = AccessToken.encode({ user_id: user.id })
           render json: { status: true, message: UserSerializer.new(user), access_token: access_token }, status: 200
         else
-          render json: { status: false, message: user.errors }, status: 400
+          render json: { status: false, message: ErrorsHandler.hand_errors(user.errors) }, status: 400
         end
       end
       return
@@ -32,7 +32,7 @@ class UsuariosController < ApplicationController
         render json: { status: true, message: us[:message] }, status: 200
         return
       end
-      render json: { status: false, message: users.errors }, status: 404
+      render json: { status: false, message: ErrorsHandler.hand_errors(users.errors) }, status: 404
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -44,7 +44,7 @@ class UsuariosController < ApplicationController
         render json: { status: true, message: UserSerializer.new(user) }, status: 200
         return
       end
-      render json: { status: false, message: user.errors }, status: 404
+      render json: { status: false, message: ErrorsHandler.hand_errors(user.errors) }, status: 404
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -57,7 +57,7 @@ class UsuariosController < ApplicationController
         render json: { status: true, message: UserSerializer.new(user) }, status: 201
         return
       end
-      render json: { status: false, message: user.errors }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(user.errors) }, status: 400
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -69,7 +69,7 @@ class UsuariosController < ApplicationController
         render json: { status: true, message: UserSerializer.new(user) }, status: 201
         return
       end
-      render json: { status: false, message: user.errors }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(user.errors) }, status: 400
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -81,7 +81,7 @@ class UsuariosController < ApplicationController
         render json: { status: true, message: UserSerializer.new(user) }, status: 200
         return
       end
-      render json: { status: false, message: user.errors }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(user.errors) }, status: 400
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
