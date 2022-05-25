@@ -5,6 +5,9 @@ class OrdeneSerializer < ActiveModel::Serializer
     :Descripcion,
     :Anticipo,
     :Diseño,
+    :FechaCreacion,
+    :telefono,
+    :cliente,
     :productos
   )
   belongs_to :User
