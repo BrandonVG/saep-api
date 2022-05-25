@@ -83,6 +83,8 @@ class OrdenesController < ApplicationController
       :estados_ordenes_id,
       :fechaCreacion,
       :correo,
+      :telefono,
+      :Cliente
       productos: [:idProducto, :cantidad]
     )
   end
