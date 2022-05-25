@@ -3,7 +3,7 @@ class CreateOrdenesProductos < ActiveRecord::Migration[7.0]
     create_table :ordenes_productos, id: false do |t|
       t.belongs_to :ordenes, index: true
       t.belongs_to :productos, index: true
-      t.integer :Cantidad
+      t.integer :cantidad
 
       t.timestamps
     end

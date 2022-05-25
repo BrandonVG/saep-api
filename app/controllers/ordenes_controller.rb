@@ -4,7 +4,7 @@ class OrdenesController < ApplicationController
     prods = orden_create_params[:productos]
     if orden.valid? && orden.save
       prods.each do |prod|
-        OrdenesProducto.create(ordenes_id: orden.id, productos_id: prod[:idProducto], Cantidad: prod[:cantidad])
+        OrdenesProducto.create(ordenes_id: orden.id, productos_id: prod[:idProducto], cantidad: prod[:cantidad])
       end
       render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
       return
@@ -115,7 +115,7 @@ class OrdenesController < ApplicationController
     if @current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2
       Ordene.all
     elsif @current_user.tipos_usuarios_id == 3
-      Ordene.where(estados_ordenes_id: 2)
+      Ordene.all
     else
       Ordene.where(users_id: @current_user.id)
     end

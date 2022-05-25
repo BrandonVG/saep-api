@@ -1,12 +1,12 @@
 class ProductosOrdenesSerializer < ActiveModel::Serializer
   attributes(
     :id,
-    :Nombre,
-    :Descripcion,
-    :PrecioPublico,
-    :PrecioMayoreoPublico,
-    :PrecioMaquila,
-    :PrecioMayoreoMaquila,
+    :nombre,
+    :descripcion,
+    :precioPublico,
+    :precioMayoreoPublico,
+    :precioMaquila,
+    :precioMayoreoMaquila,
     :cantidad
   )
   def cantidad
