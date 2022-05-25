@@ -9,7 +9,7 @@ class OrdenesController < ApplicationController
       render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
       return
     end
-    render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 400
+    render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 200
   end
 
   def update
@@ -18,7 +18,7 @@ class OrdenesController < ApplicationController
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
         return
       end
-      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 200
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -31,7 +31,7 @@ class OrdenesController < ApplicationController
       render json: { status: true, message: od[:ordenes] }, status: 200
       return
     end
-    render json: { status: false, message: ErrorsHandler.hand_errors(ordenes.errors) }, status: 400
+    render json: { status: false, message: ErrorsHandler.hand_errors(ordenes.errors) }, status: 200
   end
 
   def order_by_id_get
@@ -40,7 +40,7 @@ class OrdenesController < ApplicationController
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 200
         return
       end
-      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 200
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -52,7 +52,7 @@ class OrdenesController < ApplicationController
         render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 200
         return
       end
-      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(orden.errors) }, status: 200
       return
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
@@ -65,7 +65,7 @@ class OrdenesController < ApplicationController
         render json: { status: true, message: od[:ordenes] }, status: 200
         return
       end
-      render json: { status: false, message: ErrorsHandler.hand_errors(ordenes.errors) }, status: 400
+      render json: { status: false, message: ErrorsHandler.hand_errors(ordenes.errors) }, status: 200
     end
     render json: { status: false, message: 'No Autorizado' }, status: 401
   end
