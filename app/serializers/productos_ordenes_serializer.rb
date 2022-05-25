@@ -4,9 +4,8 @@ class ProductosOrdenesSerializer < ActiveModel::Serializer
     :nombre,
     :descripcion,
     :precioPublico,
-    :precioMayoreoPublico,
     :precioMaquila,
-    :precioMayoreoMaquila,
+    :descuentoMaquila
     :cantidad
   )
   def cantidad
