@@ -25,8 +25,8 @@ class OrdenesController < ApplicationController
   end
 
   def all_orders_get
-    if (ordenes = obtener_ordenes)
-      p ordenes
+    ordenes = obtener_ordenes
+    if ordenes
       od = ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer).as_json
       render json: { status: true, message: od[:ordenes] }, status: 200
       return
@@ -112,12 +112,11 @@ class OrdenesController < ApplicationController
   def obtener_ordenes
     if @current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2
       Ordene.all
-      return
     elsif @current_user.tipos_usuarios_id == 3
       Ordene.where(estados_ordenes_id: 2)
-      return
+    else
+      Ordene.where(users_id: @current_user.id)
     end
-    Ordene.where(users_id: @current_user.id)
   end
 
   def crear_orden(ord, correo)
