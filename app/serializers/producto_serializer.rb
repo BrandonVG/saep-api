@@ -1,11 +1,10 @@
 class ProductoSerializer < ActiveModel::Serializer
   attributes(
     :id,
-    :Nombre,
-    :Descripcion,
-    :PrecioPublico,
-    :PrecioMayoreoPublico,
-    :PrecioMaquila,
-    :PrecioMayoreoMaquila
+    :nombre,
+    :descripcion,
+    :precioPublico,
+    :precioMaquila,
+    :descuentoMaquila
   )
 end

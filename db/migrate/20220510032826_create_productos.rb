@@ -4,10 +4,9 @@ class CreateProductos < ActiveRecord::Migration[7.0]
       t.string :nombre
       t.string :descripcion
       t.integer :precioPublico
-      t.integer :precioMayoreoPublico
       t.integer :precioMaquila
-      t.integer :precioMayoreoMaquila
-
+      t.string :descuentoMaquila
+      
       t.timestamps
     end
   end
