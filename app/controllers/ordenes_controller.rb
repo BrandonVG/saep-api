@@ -75,20 +75,20 @@ class OrdenesController < ApplicationController
 
   def orden_create_params
     params.require(:orden).permit(
-      :Costo,
-      :Descripcion,
-      :Anticipo,
-      # :Diseño,
+      :costo,
+      :descripcion,
+      :anticipo,
+      # :diseño,
       :tipos_trabajos_id,
       :estados_ordenes_id,
-      :FechaCreacion,
+      :fechaCreacion,
       :correo,
       productos: [:idProducto, :cantidad]
     )
   end
 
   def orden_create_params_finals
-    orden_create_params.merge(estados_ordenes_id: 1, FechaCreacion: DateTime.now, Costo: cotizar(orden_create_params[:productos]))
+    orden_create_params.merge(estados_ordenes_id: 1, fechaCreacion: DateTime.now, costo: cotizar(orden_create_params[:productos]))
   end
 
   def orden_update_params

@@ -6,6 +6,7 @@ class OrdeneSerializer < ActiveModel::Serializer
     :anticipo,
     :diseño,
     :fechaCreacion,
+    :fechaEntrega,
     :telefono,
     :cliente,
     :estados_ordenes_id,
