@@ -79,7 +79,6 @@ class OrdenesController < ApplicationController
       :descripcion,
       :anticipo,
       # :diseño,
-      :tipos_trabajos_id,
       :estados_ordenes_id,
       :fechaCreacion,
       :correo,
