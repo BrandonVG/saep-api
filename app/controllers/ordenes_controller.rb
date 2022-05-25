@@ -84,7 +84,7 @@ class OrdenesController < ApplicationController
       :fechaCreacion,
       :correo,
       :telefono,
-      :Cliente
+      :cliente,
       productos: [:idProducto, :cantidad]
     )
   end
