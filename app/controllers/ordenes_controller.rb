@@ -111,14 +111,13 @@ class OrdenesController < ApplicationController
 
   def obtener_ordenes
     if @current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2
-      ordenes = Ordene.all
+      Ordene.all
       return
     elsif @current_user.tipos_usuarios_id == 3
-      ordenes = Ordene.where(estados_ordenes_id: 2)
-    else
-      ordenes = Ordene.where(users_id: @current_user.id)
+      Ordene.where(estados_ordenes_id: 2)
+      return
     end
-    ordenes
+    Ordene.where(users_id: @current_user.id)
   end
 
   def crear_orden(ord, correo)
