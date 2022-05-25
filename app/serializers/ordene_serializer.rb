@@ -1,13 +1,14 @@
 class OrdeneSerializer < ActiveModel::Serializer
   attributes(
     :id,
-    :Costo,
-    :Descripcion,
-    :Anticipo,
-    :Diseño,
-    :FechaCreacion,
+    :costo,
+    :descripcion,
+    :anticipo,
+    :diseño,
+    :fechaCreacion,
     :telefono,
     :cliente,
+    :estados_ordenes_id,
     :productos
   )
   belongs_to :User
