@@ -95,8 +95,8 @@ class OrdenesController < ApplicationController
 
   def orden_update_params
     params.require(:orden).permit(
-      :Costo,
-      :Descripcion,
+      :costo,
+      :descripcion,
       # :Diseño,
       :estados_ordenes_id
     )

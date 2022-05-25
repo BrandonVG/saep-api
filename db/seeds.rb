@@ -7,8 +7,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 TiposUsuario.create([{ tipo: 'Admin' }, { tipo: 'Empleado A' }, { tipo: 'Empleado B' }, { tipo: 'Cliente' }])
 
-EstadosOrdene.create([{ Estado: 'Pendiente' }, { Estado: 'En proceso' }, { Estado: 'Listo' }, { Estado: 'Rechazado' },
-                      { Estado: 'Aceptado' }])
+EstadosOrdene.create([{ estado: 'Pendiente' }, { estado: 'En proceso' }, { estado: 'Listo' }, { estado: 'Rechazado' },
+                      { estado: 'Aceptado' }])
 Producto.create([{ nombre: 'Lona 13 onzas alta resolución', descripcion: 'De 1 a 3/4 M2 se cobra metro completo (1m2 a .76)',
                    precioPublico: '98', precioMaquila:'65' },
                  { nombre: 'Lona 13 onzas alta resolución', descripcion: 'Menos de 3/4 hasta 1/2 M2 el costo es el 40% extra (.75 a .51)',
