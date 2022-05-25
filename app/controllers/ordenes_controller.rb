@@ -26,6 +26,7 @@ class OrdenesController < ApplicationController
 
   def all_orders_get
     if (ordenes = obtener_ordenes)
+      p ordenes
       od = ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer).as_json
       render json: { status: true, message: od[:ordenes] }, status: 200
       return
