@@ -1,10 +1,10 @@
 class OrdenesController < ApplicationController
   def create
-    orden = @current_user.ordenes.new(orden_create_params_finals.except(:productos))
+    orden = crear_orden(orden_create_params_finals.except(:productos, :correo), orden_create_params_finals[:correo])
     prods = orden_create_params[:productos]
     if orden.valid? && orden.save
       prods.each do |prod|
-        OrdenesProducto.create(ordenes_id: orden.id, productos_id: prod[:id_producto], Cantidad: prod[:cantidad])
+        OrdenesProducto.create(ordenes_id: orden.id, productos_id: prod[:idProducto], Cantidad: prod[:cantidad])
       end
       render json: { status: true, message: OrdeneSerializer.new(orden) }, status: 201
       return
@@ -85,7 +85,8 @@ class OrdenesController < ApplicationController
       :tipos_trabajos_id,
       :estados_ordenes_id,
       :FechaCreacion,
-      productos: [:id_producto, :cantidad]
+      :correo,
+      productos: [:idProducto, :cantidad]
     )
   end
 
@@ -105,7 +106,7 @@ class OrdenesController < ApplicationController
   def cotizar(productos)
     total = 0
     productos.each do |p|
-      producto = Producto.find(p[:id_producto])
+      producto = Producto.find(p[:idProducto])
       total += producto.PrecioPublico * p[:cantidad]
     end
     total
@@ -120,5 +121,25 @@ class OrdenesController < ApplicationController
       return
     end
     Ordene.where(users_id: @current_user.id)
+  end
+
+  def crear_orden(ord, correo)
+    if (@current_user.tipos_usuarios_id == 1 || @current_user.tipos_usuarios_id == 2) && !correo.nil?
+      user_exists = user_exists(correo)
+      orden = user_exists.ordenes.new(ord)
+    else
+      orden = @current_user.ordenes.new(ord)
+    end
+  end
+
+  def user_exists(correo)
+    user = User.find_by(email: correo)
+    if user
+      user
+    else
+      user = User.new(email: correo, tipos_usuarios_id: 4)
+      user.save
+      user
+    end
   end
 end

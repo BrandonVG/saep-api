@@ -3,7 +3,6 @@ class OrdeneSerializer < ActiveModel::Serializer
     :id,
     :Costo,
     :Descripcion,
-    :Cantidad,
     :Anticipo,
     :Diseño,
     :productos
