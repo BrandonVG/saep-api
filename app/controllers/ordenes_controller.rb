@@ -25,7 +25,6 @@ class OrdenesController < ApplicationController
   end
 
   def all_orders_get
-    if autorizar_accion_ordenes(0)
       if (ordenes = obtener_ordenes)
         od = ActiveModelSerializers::SerializableResource.new(ordenes, each_serializer: OrdeneSerializer).as_json
         render json: { status: true, message: od[:ordenes] }, status: 200
@@ -34,7 +33,6 @@ class OrdenesController < ApplicationController
       render json: { status: false, message: ErrorsHandler.hand_errors(ordenes.errors) }, status: 400
       return
     end
-    render json: { status: false, message: 'No Autorizado' }, status: 401
   end
 
   def order_by_id_get
